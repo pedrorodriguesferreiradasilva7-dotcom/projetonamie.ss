@@ -7,8 +7,34 @@
 <style>
 :root {--accent:#6b21a8; --secondary:#dc3545; --success:#28a745;}
 * {box-sizing:border-box; font-family: Inter, sans-serif;}
-html, body {margin:0; padding:0; height:100%; display:flex; align-items:center; justify-content:center; background: linear-gradient(135deg,#fdfbff 0%,#f6f8ff 100%); overflow:hidden;}
-.card {background:#fff; padding:28px; border-radius:12px; box-shadow:0 10px 30px rgba(16,24,40,0.08); width:380px; max-width:94%; text-align:center; position:relative; z-index:10;}
+
+/* Ajuste para permitir scroll vertical */
+html, body {
+  margin:0; 
+  padding:0; 
+  min-height:100%; 
+  display:block;       /* permite rolagem */
+  background: linear-gradient(135deg,#fdfbff 0%,#f6f8ff 100%);
+  overflow-y: auto;    /* barra de rolagem vertical */
+}
+
+body {
+  padding:20px;        /* espaço nas laterais */
+}
+
+.card {
+  background:#fff; 
+  padding:28px; 
+  border-radius:12px; 
+  box-shadow:0 10px 30px rgba(16,24,40,0.08); 
+  width:380px; 
+  max-width:94%; 
+  text-align:center; 
+  position:relative; 
+  z-index:10;
+  margin:20px auto;    /* centraliza e separa os cards */
+}
+
 h1 {margin:0 0 16px; font-size:22px; color:#0f172a;}
 p {margin:0 0 20px; color:#475569;}
 .pins {display:flex; gap:10px; justify-content:center; margin-bottom:14px;}
@@ -160,44 +186,44 @@ pedidoYes.addEventListener('click', ()=>{
   pedido.style.display='none';
   errorMsg.style.display='block';
   errorMsg.innerHTML = `
-<div style="width:90%; max-width:500px; height:400px; margin:20px auto; padding:15px; background:#fff0f6; border-radius:15px; box-shadow:0 8px 20px rgba(0,0,0,0.1); font-family:Arial,sans-serif; color:#333; line-height:1.6; overflow-y:scroll; box-sizing:border-box;">
+<div style="background:#fff0f6; padding:20px; border-radius:15px; max-width:500px; margin:0 auto; line-height:1.6;">
   <p>💌 <strong>Ana Namiê</strong>,</p>
-
   <p>Nem sei por onde começar, mas queria me expressar e te dizer que te amo muito. ❤️ Faz 4 meses que gosto de você, mas nunca tive coragem de falar sobre isso. Pode não ter parecido, mas foi difícil tentar conversar com você.</p>
-
   <p>Eu sei que às vezes ficava “Shippando” você com o Carlos, mas era a minha forma de tentar falar com você, porque você é muito difícil de conversar… mas ao mesmo tempo linda, simpática e legal. ✨ Espero que continue assim para sempre.</p>
-
   <p>Eu te amo de qualquer jeito, até nos piores dias, com espinhas ou dores. 💖 Espero que tenha gostado do site. Queria ter conversado mais ou te conhecido melhor, mas se você aceitar, provavelmente conseguirei, e quem sabe, como talvez seu namorado, possamos nos conhecer muito mais.</p>
-
   <p style="text-align:right;">ASS: <strong>Pedro</strong><br>29/08/2025</p>
 </div>
 
-    <button id="linkBtn" style="
-      margin:20px auto;
-      display:block;
-      padding:12px 24px;
-      border-radius:12px;
-      border:none;
-      background:linear-gradient(90deg,#ff3cac,#784ba0,#2b86c5);
-      color:white;
-      font-weight:700;
-      font-size:18px;
-      cursor:pointer;
-      box-shadow:0 4px 15px rgba(0,0,0,0.2);
-    ">Clique aqui</button>
-    <button id="restartBtn" style="
-      margin:10px auto;
-      display:block;
-      padding:10px 20px;
-      border-radius:12px;
-      border:none;
-      background:#0d6efd;
-      color:white;
-      font-weight:600;
-      cursor:pointer;
-    ">Voltar ao início</button>
+<button id="linkBtn" style="
+  margin:20px auto;
+  display:block;
+  padding:12px 24px;
+  border-radius:12px;
+  border:none;
+  background:linear-gradient(90deg,#ff3cac,#784ba0,#2b86c5);
+  color:white;
+  font-weight:700;
+  font-size:18px;
+  cursor:pointer;
+  box-shadow:0 4px 15px rgba(0,0,0,0.2);
+">Clique aqui</button>
+
+<button id="restartBtn" style="
+  margin:10px auto;
+  display:block;
+  padding:10px 20px;
+  border-radius:12px;
+  border:none;
+  background:#0d6efd;
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+">Voltar ao início</button>
   `;
-  document.getElementById('linkBtn').addEventListener('click', ()=>{ window.open('https://www.youtube.com/watch?v=lp-EO5I60KA','_blank'); });
+
+  document.getElementById('linkBtn').addEventListener('click', ()=>{ 
+    window.open('https://www.youtube.com/watch?v=lp-EO5I60KA','_blank'); 
+  });
   document.getElementById('restartBtn').addEventListener('click', ()=>{
     errorMsg.style.display='none';
     currentQuestion=0; naoIndex=0;
