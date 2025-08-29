@@ -160,7 +160,7 @@ pedidoYes.addEventListener('click', ()=>{
   pedido.style.display='none';
   errorMsg.style.display='block';
   errorMsg.innerHTML = `
-<div style="width:90%; max-width:500px; margin:20px auto; padding:15px; background:#fff0f6; border-radius:15px; box-shadow:0 8px 20px rgba(0,0,0,0.1); font-family:Arial,sans-serif; color:#333; line-height:1.6; word-wrap:break-word; box-sizing:border-box;">
+<div style="width:90%; max-width:500px; height:400px; margin:20px auto; padding:15px; background:#fff0f6; border-radius:15px; box-shadow:0 8px 20px rgba(0,0,0,0.1); font-family:Arial,sans-serif; color:#333; line-height:1.6; overflow-y:scroll; box-sizing:border-box;">
   <p>💌 <strong>Ana Namiê</strong>,</p>
 
   <p>Nem sei por onde começar, mas queria me expressar e te dizer que te amo muito. ❤️ Faz 4 meses que gosto de você, mas nunca tive coragem de falar sobre isso. Pode não ter parecido, mas foi difícil tentar conversar com você.</p>
