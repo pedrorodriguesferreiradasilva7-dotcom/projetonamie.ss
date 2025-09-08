@@ -22,6 +22,10 @@
   .matched{background:#ffb3c6;cursor:default;}
   /* Labirinto */
   canvas{background:#fff;border:2px solid #333;margin-top:20px;touch-action:none;}
+  /* Setinhas touchscreen */
+  .controls{display:flex;flex-direction:column;align-items:center;margin-top:10px;}
+  .controls div{display:flex;gap:10px;}
+  .controls button{padding:10px 15px;font-size:1.2rem;border-radius:8px;border:none;background:#ff4d85;color:white;cursor:pointer;}
   /* Final */
   .final{background:#ffeff5;color:#333;padding:40px;border-radius:20px;text-align:center;font-size:1.2rem;}
 </style>
@@ -47,6 +51,14 @@
 <section id="labirinto" class="hidden">
   <h1>Encontre o coração no labirinto 💘</h1>
   <canvas id="game" width="400" height="400"></canvas>
+  <div class="controls">
+    <div><button id="upBtn">⬆</button></div>
+    <div>
+      <button id="leftBtn">⬅</button>
+      <button id="downBtn">⬇</button>
+      <button id="rightBtn">➡</button>
+    </div>
+  </div>
 </section>
 
 <!-- Mensagem Final -->
@@ -105,29 +117,21 @@ function startMemoria(){
   cards.forEach(sym=>{
     const c=document.createElement('div');
     c.className='card';
-    const span=document.createElement('span');
-    span.textContent='';
+    const span=document.createElement('span'); span.textContent='';
     c.appendChild(span);
     c.dataset.sym=sym;
 
     function flipCard(){
       if(lock || c.classList.contains('matched') || span.textContent) return;
-      span.textContent = sym;
-      c.style.background='#ffe4e1';
-
+      span.textContent = sym; c.style.background='#ffe4e1';
       if(!first){
         first={card:c,span:span};
       } else {
         if(first.card.dataset.sym===c.dataset.sym){
-          first.card.classList.add('matched'); 
-          c.classList.add('matched');
-          matched+=2;
-          first=null;
+          first.card.classList.add('matched'); c.classList.add('matched');
+          matched+=2; first=null;
           if(matched===cards.length){
-            setTimeout(()=>{
-              memoria.classList.add('hidden'); 
-              startLabirinto();
-            },500);
+            setTimeout(()=>{memoria.classList.add('hidden'); startLabirinto();},500);
           }
         } else {
           lock=true;
@@ -166,6 +170,7 @@ function startLabirinto(){
     [0,0,0,0,0,0,0,0,0,0],
     [0,1,1,1,1,1,1,1,1,0],
   ];
+
   function draw(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     for(let y=0;y<rows;y++){
@@ -173,21 +178,35 @@ function startLabirinto(){
         if(maze[y][x]===1){ctx.fillStyle='#333';ctx.fillRect(x*size,y*size,size,size);}
       }
     }
-    ctx.fillStyle='blue';ctx.fillRect(player.x*size,player.y*size,size,size);
-    ctx.fillStyle='red';ctx.font='30px sans-serif';ctx.fillText('❤',goal.x*size+8,goal.y*size+28);
+    ctx.fillStyle='blue'; ctx.fillRect(player.x*size,player.y*size,size,size);
+    ctx.fillStyle='gold'; ctx.font='30px sans-serif';
+    ctx.fillText('❤', goal.x*size+8, goal.y*size+28);
   }
   draw();
-  window.onkeydown=e=>{
-    let nx=player.x,ny=player.y;
-    if(e.key==='ArrowUp')ny--;if(e.key==='ArrowDown')ny++;
-    if(e.key==='ArrowLeft')nx--;if(e.key==='ArrowRight')nx++;
+
+  function movePlayer(dx,dy){
+    let nx=player.x+dx, ny=player.y+dy;
     if(nx>=0&&ny>=0&&nx<cols&&ny<rows&&maze[ny][nx]===0){
-      player.x=nx;player.y=ny;draw();
-      if(player.x===goal.x&&player.y===goal.y){
-        setTimeout(()=>{lab.classList.add('hidden');document.getElementById('final').classList.remove('hidden');},200);
+      player.x=nx; player.y=ny; draw();
+      if(player.x===goal.x && player.y===goal.y){
+        setTimeout(()=>{lab.classList.add('hidden'); document.getElementById('final').classList.remove('hidden');},200);
       }
     }
   }
+
+  // Teclado
+  window.addEventListener('keydown', e=>{
+    if(e.key==='ArrowUp') movePlayer(0,-1);
+    if(e.key==='ArrowDown') movePlayer(0,1);
+    if(e.key==='ArrowLeft') movePlayer(-1,0);
+    if(e.key==='ArrowRight') movePlayer(1,0);
+  });
+
+  // Botões touchscreen
+  document.getElementById('upBtn').addEventListener('click', ()=>movePlayer(0,-1));
+  document.getElementById('downBtn').addEventListener('click', ()=>movePlayer(0,1));
+  document.getElementById('leftBtn').addEventListener('click', ()=>movePlayer(-1,0));
+  document.getElementById('rightBtn').addEventListener('click', ()=>movePlayer(1,0));
 }
 </script>
 </body>
